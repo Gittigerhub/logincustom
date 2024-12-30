@@ -20,7 +20,7 @@ public class LoginController {
         return "index";
     }
 
-    // 결과페이지(모든 사용자 권한)
+    // 결과페이지(로그인 성공한 사용자 권한)
     @GetMapping("/result")
     public String resultForm() {
         return "result";
@@ -48,6 +48,9 @@ public class LoginController {
     // 사용자 로그아웃을 작업할 때 반드시 섹션을 제거하는 부분을 추가
     @GetMapping("/logout")
     public String logout(HttpSession session) {
+        // 섹션(서버의 저장공간) : 컴퓨터id + 사용자정보로 저장
+        // 섹션을 저장해야 로그아웃 처리가 된다.
+        // (응용) 자동로그아웃 처리기능 추가(5분 or 10분 동안 작업이 없으면 자동 로그아웃)
         session.invalidate();       // 세션에서 로그인 정보를 제거
         return "redirect:/login";
     }
@@ -63,7 +66,7 @@ public class LoginController {
 
         loginService.saveUser(loginDTO);
 
-        return "register";
+        return "redirect:/login";
     }
 
 }
